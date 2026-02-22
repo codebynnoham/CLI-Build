@@ -1,8 +1,8 @@
-package com.cli.exercise;
+package model;
 
 import java.math.BigDecimal;
 
-public enum CarCategory {
+public enum Category {
     ECONOMY {
         @Override
         public BigDecimal getBaseCharge() {
@@ -87,41 +87,6 @@ public enum CarCategory {
             return "Sport Utility Vehicles, higher driving position (e.g. BMW X5, Mercedes Benz GLE).";
         }
     },
-
-//    ELECTRIC {
-//        @Override
-//        public BigDecimal getBaseCharge() {
-//            return new BigDecimal("300.00");
-//        }
-//
-//        @Override
-//        public BigDecimal getDailyRate() {
-//            return new BigDecimal("800.00");
-//        }
-//
-//        @Override
-//        public String getDescription() {
-//            return "Electric vehicles (e.g. Tesla Model S, Polestar 3, BYD Atto 3).";
-//        }
-//    },
-//
-//    HYBRID {
-//        @Override
-//        public BigDecimal getBaseCharge() {
-//            return new BigDecimal("350.00");
-//        }
-//
-//        @Override
-//        public BigDecimal getDailyRate() {
-//            return new BigDecimal("700.00");
-//        }
-//
-//        @Override
-//        public String getDescription() {
-//            return "Fuel + electric cars (e.g. Ford Fusion, Hyundai i20, Volvo V40).";
-//        }
-//    },
-
     LUXURY {
         @Override
         public BigDecimal getBaseCharge() {

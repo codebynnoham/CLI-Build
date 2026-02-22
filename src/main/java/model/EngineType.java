@@ -1,4 +1,4 @@
-package com.cli.exercise;
+package model;
 
 public enum EngineType {
     PETROL,

@@ -1,0 +1,42 @@
+package dao;
+
+import model.Customer;
+
+import java.util.Arrays;
+import java.util.Optional;
+
+public class CustomerDAO {
+    private Customer[] customerDB;
+    private int index;
+
+    public CustomerDAO(int initialCapacity) {
+        this.customerDB = new Customer[Math.max(initialCapacity, 1)];
+        this.index = 0;
+    }
+
+    public void addCustomer(Customer customer) {
+        if (index == customerDB.length)
+            resize();
+        customerDB[index++] = customer;
+    }
+
+    private void resize() {
+        customerDB = Arrays.copyOf(customerDB, customerDB.length * 2);
+    }
+
+    public Customer[] getAllCustomers() {
+        return Arrays.copyOf(customerDB, index);
+    }
+
+    public Optional<Customer> findByCustomerId(int customerId) {
+        for (Customer customer : getAllCustomers()) {
+            if (customer.getCustomerId() == customerId)
+                return Optional.of(customer);
+        }
+        return Optional.empty();
+    }
+
+    public int getSize() {
+        return index;
+    }
+}
