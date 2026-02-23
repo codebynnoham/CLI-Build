@@ -10,7 +10,9 @@ public interface ICustomerService {
 
     Optional<Customer> findCustomerById(int id);
 
-    boolean deleteCustomerById(int id);
+    void deleteCustomerById(int id);
 
     List<Customer> getAllCustomers();
 }
+
+

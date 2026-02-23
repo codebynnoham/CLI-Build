@@ -1,8 +1,8 @@
 package model;
 
+import service.BookingService;
+
 import java.security.SecureRandom;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 
 import static java.util.Objects.requireNonNull;
 
@@ -61,3 +61,5 @@ public class Booking {
                 %s""", message1(), bookingId, period.startDate(), period.endDate(), message2(), customer, message3(), car);
     }
 }
+
+

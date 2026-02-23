@@ -1,5 +1,6 @@
 package dao;
 
+import model.Booking;
 import model.Customer;
 
 import java.util.Arrays;
@@ -29,14 +30,32 @@ public class CustomerDAO {
     }
 
     public Optional<Customer> findByCustomerId(int customerId) {
-        for (Customer customer : getAllCustomers()) {
+        for (int i = 0; i < index; i++) {
+            Customer customer = customerDB[i];
             if (customer.getCustomerId() == customerId)
                 return Optional.of(customer);
         }
         return Optional.empty();
     }
 
+    public boolean removeCustomerById(int customerId) {
+        for (int i = 0; i < index; i++) {
+            Customer customer = customerDB[i];
+            if (customer.getCustomerId() == customerId) {
+                for (int j = i; j < index - 1; j++) {
+                    customerDB[j] = customerDB[j + 1];
+                }
+                customerDB[index - 1] = null;
+                index--;
+                return true;
+            }
+        }
+        return false;
+    }
+
     public int getSize() {
         return index;
     }
 }
+
+

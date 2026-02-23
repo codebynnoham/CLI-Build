@@ -3,15 +3,14 @@ package contract;
 import model.Booking;
 import model.DateRange;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
 public interface IBookingService {
-    Booking createBooking(int customerId,
-                          String registrationNumber,
-                          DateRange range);
+    Booking createBooking(int customerId , String regNumber, DateRange period);
 
-    boolean cancelBooking(int bookingId);
+    void cancelBooking(int bookingId);
 
     boolean isCarAvailable(String registrationNumber, DateRange range);
 
@@ -22,4 +21,9 @@ public interface IBookingService {
     List<Booking> getBookingsByCustomer(int customerId);
 
     List<Booking> getBookingsByCar(String registrationNumber);
+
+    BigDecimal calculateTotalPrice(int bookingId);
+
+    String printBookingSummary(int bookingId);
 }
+

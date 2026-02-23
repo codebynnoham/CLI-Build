@@ -5,14 +5,13 @@ import model.Category;
 import model.DateRange;
 import model.EngineType;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 public interface ICarService {
     void registerCar(Car car);
     Optional<Car> findCarByRegNumber(String regNumber);
-    boolean deleteCarByRegNumber(String regNumber);
+    void deleteCarByRegNumber(String regNumber);
     List<Car> getAllCars();
     List<Car> getAvailableCars(DateRange period);
     List<Car> getCarsByEngineType(EngineType engineType);

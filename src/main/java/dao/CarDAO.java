@@ -20,6 +20,20 @@ public class CarDAO {
         carDB[index ++] = car;
     }
 
+    public boolean removeCarByRegNumber(String regNumber) {
+        for (int i = 0; i < index; i++) {
+            if (carDB[i].registrationNumber().equalsIgnoreCase(regNumber)) {
+                for (int j = i; j < index - 1; j++) {
+                    carDB[j] = carDB[j + 1];
+                }
+                carDB[index - 1] = null;
+                index--;
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void resize() {
         carDB = Arrays.copyOf(carDB, carDB.length * 2);
     }
