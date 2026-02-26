@@ -76,16 +76,16 @@ public class BookingManager {
     public void registerBooking(Scanner scanner) {
         requireNonNull(scanner, "Scanner cannot be null");
         try {
-            out.print("Enter Customer ID: ");
+            out.print("Enter the Customer ID: ");
             int customerId = Integer.parseInt(scanner.nextLine().trim());
             out.println();
-            out.print("Enter Car Registration Number: ");
+            out.print("Enter the Registration Number of the Car to Book: ");
             String regNumber = scanner.nextLine().trim();
             out.println();
-            out.print("Enter Start Date (yyyy-mm-dd): ");
+            out.print("Enter Booking Start Date (yyyy-mm-dd): ");
             LocalDate startDate = LocalDate.parse(scanner.nextLine().trim());
             out.println();
-            out.print("Enter End Date (yyyy-mm-dd): ");
+            out.print("Enter Booking End Date (yyyy-mm-dd): ");
             LocalDate endDate = LocalDate.parse(scanner.nextLine().trim());
             DateRange period = new DateRange(startDate, endDate);
             Booking booking = bookingService.createBooking(customerId, regNumber, period);
@@ -96,7 +96,7 @@ public class BookingManager {
         }  catch (NumberFormatException e) {
             err.println("Invalid number format. Please enter a valid numeric Customer ID.");
         } catch (DateTimeParseException e) {
-            err.println("Invalid date format. Please use yyyy-mm-dd.");
+            err.println("Invalid date format or date value. Please use yyyy-mm-dd.");
         } catch (CustomerNotFoundException | CarNotFoundException | CarNotAvailableException |
                  StartDateSucceedsEndDateException | EndDatePrecedesStartDateException  e ) {
             err.println(" ".repeat(10) + "Error: " + e.getMessage());
@@ -119,10 +119,10 @@ public class BookingManager {
             out.print("Enter Year of Manufacture (yyyy): ");
             int yearOfManufacture = Integer.parseInt(scanner.nextLine().trim());
             out.println();
-            out.println("Enter Car Category: ");
+            out.print("Enter Car Category: ");
             Category category = Category.fromString(scanner.nextLine().trim());
             out.println();
-            out.println("Enter Engine Type: ");
+            out.print("Enter Engine Type: ");
             EngineType engineType = EngineType.fromString(scanner.nextLine().trim());
             out.println();
             Car car = new Car(regNumber, brand, model, yearOfManufacture, category, engineType);
@@ -150,12 +150,16 @@ public class BookingManager {
             out.println();
             out.print("Enter Customer Phone Number: ");
             String phoneNumber = scanner.nextLine().trim();
+            out.println();
             out.print("Enter Customer House Number: ");
             String houseNumber = scanner.nextLine().trim();
+            out.println();
             out.print("Enter customer Street Name: ");
             String streetName = scanner.nextLine().trim();
+            out.println();
             out.print("Enter Customer Postal Code: ");
             String postalCode = scanner.nextLine().trim();
+            out.println();
             out.print("Enter Customer City Name: ");
             String cityName = scanner.nextLine().trim();
             Address address = new Address(houseNumber, streetName, postalCode, cityName);
@@ -199,14 +203,15 @@ public class BookingManager {
             customerService.findCustomerById(customerId)
                     .orElseThrow(() -> new CustomerNotFoundException("Customer with id " + customerId + " not found"));
             List<Booking> bookings = bookingService.getBookingsByCustomer(customerId);
-            BigDecimal totalCost = bookingService.calculateTotalPrice(customerId);
+            //BigDecimal totalCost = bookingService.calculateTotalPrice(customerId);
             out.println("**".repeat(20) + " Summary List of All Bookings by Customer with Id: " + customerId + "**".repeat(20));
-            //bookingService.getBookingsByCustomer(customerId).forEach(booking -> out.println(booking));
             if (bookings.isEmpty()) {
-                out.println("No bookings found for customer with id " + customerId);
+                out.println(" ".repeat(15) + " No bookings found for customer with id " + customerId);
             } else {
-                bookings.forEach(booking -> out.println(booking));
-                out.println("Total Cost: " + totalCost);
+                bookings.forEach(booking ->  {
+                    BigDecimal totalCost = bookingService.calculateTotalPrice(booking.getBookingId());
+                    out.println(booking.toString(totalCost));
+                });
             }
         } catch (NumberFormatException e) {
             err.println("Invalid number format. Please enter a valid numeric Customer ID.");
@@ -220,15 +225,16 @@ public class BookingManager {
     public void getAllAvailableCars(Scanner scanner) {
         requireNonNull(scanner, "Scanner cannot be null");
         try {
-            out.print(" Enter Start Date (yyyy-mm-dd): ");
+            out.print(" Please Enter Start Date (yyyy-mm-dd): ");
             LocalDate startDate = LocalDate.parse(scanner.nextLine().trim());
             out.println();
+            out.print(" Please Enter End Date (yyyy-mm-dd): ");
             LocalDate endDate = LocalDate.parse(scanner.nextLine().trim());
             DateRange period = new DateRange(startDate, endDate);
             out.println("*".repeat(10) + " Summary List of Available Cars for the Period " + period.startDate() + " to " + period.endDate() + "*".repeat(10));
             carService.getAvailableCars(period).forEach(car -> out.println(car));
         } catch (DateTimeParseException e) {
-            err.println("Invalid date format. Please use yyyy-mm-dd.");
+            err.println("Invalid date format or date value. Please use yyyy-mm-dd.");
         } catch (CarNotAvailableException e) {
             err.println("Error: " + e.getMessage());
         }

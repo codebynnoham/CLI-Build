@@ -24,6 +24,8 @@ public interface IBookingService {
 
     BigDecimal calculateTotalPrice(int bookingId);
 
-    String printBookingSummary(int bookingId);
+    //String printBookingSummary(int bookingId);
+
+    //String toString(BigDecimal totalCost);
 }
 

@@ -95,6 +95,7 @@ public class BookingService implements IBookingService {
         return baseCharge.add(dailyRate.multiply(days));
     }
 
+
     private String message1() {
         return String.format("%s BOOKING SUMMARY %s", " ".repeat(25) , " ".repeat(25));
     }
@@ -107,35 +108,36 @@ public class BookingService implements IBookingService {
         return String.format("%s CAR DETAILS %s", " ".repeat(25) , " ".repeat(25));
     }
 
-    @Override
-    public String printBookingSummary(int bookingId) {
-        Booking booking = findBookingById(bookingId)
-                .orElseThrow(() -> new IllegalArgumentException("Booking with Id " + bookingId + " not found"));
 
-        BigDecimal totalCost = calculateTotalPrice(bookingId);
+//    public String toString(BigDecimal totalCost) {
+//        Booking booking = findBookingById(bookingId)
+//                .orElseThrow(() -> new IllegalArgumentException("Booking with Id " + bookingId + " not found"));
+//
+//        BigDecimal totalCost = calculateTotalPrice(bookingId);
+//
+//        return String.format("""
+//            %s
+//            Booking ID  : %d
+//            Start Date  : %s
+//            End Date    : %s
+//            Total Cost  : %s
+//            %s
+//            %s
+//            %s
+//            %s
+//            """,
+//                message1(),
+//                booking.getBookingId(),
+//                booking.getPeriod().startDate(),
+//                booking.getPeriod().endDate(),
+//                totalCost,
+//                message2(),
+//                booking.getCustomer(),
+//                message3(),
+//                booking.getCar()
+//        );
+//    }
 
-        return String.format("""
-            %s
-            Booking ID  : %d
-            Start Date  : %s
-            End Date    : %s
-            Total Cost  : %s
-            %s
-            %s
-            %s
-            %s
-            """,
-                message1(),
-                booking.getBookingId(),
-                booking.getPeriod().startDate(),
-                booking.getPeriod().endDate(),
-                totalCost,
-                message2(),
-                booking.getCustomer(),
-                message3(),
-                booking.getCar()
-        );
-    }
 }
 
 

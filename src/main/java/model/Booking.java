@@ -2,12 +2,16 @@ package model;
 
 import service.BookingService;
 
+import java.math.BigDecimal;
 import java.security.SecureRandom;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 import static java.util.Objects.requireNonNull;
 
 public class Booking {
     private static final SecureRandom RANDOM = new SecureRandom();
+    private static final NumberFormat CF = NumberFormat.getCurrencyInstance(Locale.UK);
     private final int bookingId;
     private final DateRange period;
     private final Customer customer;
@@ -59,6 +63,19 @@ public class Booking {
             %s
             %s
             %s""", message1(), bookingId, period.startDate(), period.endDate(), message2(), customer, message3(), car);
+    }
+
+    public String toString(BigDecimal totalCost) {
+        return String.format("""
+            %s
+            Booking ID  : %d
+            Start Date  : %s
+            End Date    : %s
+            Total Cost  : %s
+            %s
+            %s
+            %s
+            %s""", message1(), bookingId, period.startDate(), period.endDate(), CF.format(totalCost), message2(), customer, message3(), car);
     }
 }
 
