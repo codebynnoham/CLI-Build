@@ -1,6 +1,5 @@
 package dao;
 
-import model.Booking;
 import model.Customer;
 
 import java.util.Arrays;
@@ -57,5 +56,7 @@ public class CustomerDAO {
         return index;
     }
 }
+
+
 
 

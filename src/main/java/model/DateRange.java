@@ -1,5 +1,8 @@
 package model;
 
+import exception.EndDatePrecedesStartDateException;
+import exception.StartDateSucceedsEndDateException;
+
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
@@ -8,9 +11,9 @@ public record DateRange(LocalDate startDate, LocalDate endDate) {
         if (startDate == null || endDate == null)
             throw new IllegalArgumentException("Start date and or end date cannot be null");
         if (startDate.isAfter(endDate))
-            throw new IllegalArgumentException("Start date cannot be after end date");
+            throw new StartDateSucceedsEndDateException("Start date cannot be after end date");
         if (endDate.isBefore(startDate))
-            throw new IllegalArgumentException("End date cannot be before start date");
+            throw new EndDatePrecedesStartDateException("End date cannot be before start date");
     }
 
     public boolean isOverlap(DateRange other) {

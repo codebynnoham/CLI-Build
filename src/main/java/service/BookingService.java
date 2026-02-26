@@ -4,6 +4,10 @@ import contract.IBookingService;
 import dao.BookingDAO;
 import dao.CarDAO;
 import dao.CustomerDAO;
+import exception.BookingNotFoundException;
+import exception.CarNotAvailableException;
+import exception.CarNotFoundException;
+import exception.CustomerNotFoundException;
 import model.Booking;
 import model.Car;
 import model.Category;
@@ -28,11 +32,11 @@ public class BookingService implements IBookingService {
     @Override
     public Booking createBooking(int customerId, String regNumber, DateRange range) {
         Customer customer = customerDAO.findByCustomerId(customerId)
-                .orElseThrow(() -> new IllegalArgumentException("unable to complete booking, customer with id " + customerId + " not found"));
+                .orElseThrow(() -> new CustomerNotFoundException("unable to complete booking, customer with id " + customerId + " not found"));
         Car car = carDAO.findByRegNumber(regNumber)
-                .orElseThrow(() -> new IllegalArgumentException("unable to complete booking, car with reg number " + regNumber + " not found"));
+                .orElseThrow(() -> new CarNotFoundException("unable to complete booking, car with reg number " + regNumber + " not found"));
         if (!isCarAvailable(regNumber, range))
-            throw new IllegalArgumentException("unable to complete booking, car with reg number " + regNumber +
+            throw new CarNotAvailableException("unable to complete booking, car with reg number " + regNumber +
                     " is not available for the period " + range.startDate() + " to " + range.endDate());
 
         Booking booking;
@@ -47,7 +51,7 @@ public class BookingService implements IBookingService {
     @Override
     public void cancelBooking(int bookingId) {
         if (!bookingDAO.removeBookingById(bookingId))
-            throw new IllegalArgumentException("unable to cancel booking, booking with id " + bookingId + " not found");
+            throw new BookingNotFoundException("unable to cancel booking, booking with id " + bookingId + " not found");
     }
 
     @Override
@@ -83,7 +87,7 @@ public class BookingService implements IBookingService {
     @Override
     public BigDecimal calculateTotalPrice(int bookingId) {
         Booking booking = findBookingById(bookingId)
-                .orElseThrow(() -> new IllegalArgumentException("booking with id " + bookingId + " not found"));
+                .orElseThrow(() -> new BookingNotFoundException("booking with id " + bookingId + " not found"));
         Category category = booking.getCar().category();
         BigDecimal baseCharge = category.getBaseCharge();
         BigDecimal dailyRate = category.getDailyRate();

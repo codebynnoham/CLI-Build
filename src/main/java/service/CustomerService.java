@@ -2,6 +2,8 @@ package service;
 
 import contract.ICustomerService;
 import dao.CustomerDAO;
+import exception.CustomerNotFoundException;
+import exception.DuplicateCustomerException;
 import model.Customer;
 
 import java.util.Arrays;
@@ -20,7 +22,7 @@ public class CustomerService implements ICustomerService {
     public void registerCustomer(Customer customer) {
         Objects.requireNonNull(customer, "customer must not be null");
         if (customerDAO.findByCustomerId(customer.getCustomerId()).isPresent())
-            throw new IllegalArgumentException("customer with id " + customer.getCustomerId() + " already exists");
+            throw new DuplicateCustomerException("customer with id " + customer.getCustomerId() + " already exists");
         customerDAO.addCustomer(customer);
     }
 
@@ -32,7 +34,7 @@ public class CustomerService implements ICustomerService {
     @Override
     public void deleteCustomerById(int id) {
         if (!customerDAO.removeCustomerById(id))
-            throw new IllegalArgumentException("customer with id " + id + " not found");
+            throw new CustomerNotFoundException("customer with id " + id + " not found");
     }
 
     @Override
@@ -40,4 +42,6 @@ public class CustomerService implements ICustomerService {
         return List.copyOf(Arrays.asList(customerDAO.getAllCustomers()));
     }
 }
+
+
 

@@ -14,7 +14,7 @@ public class Customer {
     private final String email;
     private final String phoneNumber;
     private final Address address;
-    private final Booking[] booking;
+    //private final Booking[] booking;
 
     public Customer(String firstName, String lastName, String email, String phoneNumber, Address address) {
         this.customerId = RANDOM.nextInt(100_000, 1_000_000);
@@ -23,7 +23,7 @@ public class Customer {
         this.email = requireNonNull(email, "the email cannot be null");
         this.phoneNumber = requireNonNull(phoneNumber, "the phone number cannot be null");
         this.address = requireNonNull(address, "the address cannot be null");
-        this.booking = new Booking[10];
+        //this.booking = new Booking[10];
     }
     public int getCustomerId() {
         return customerId;
@@ -49,9 +49,9 @@ public class Customer {
         return address;
     }
 
-    public Booking[] getBooking() {
-        return booking;
-    }
+//    public Booking[] getBooking() {
+//        return booking;
+//    }
 
     public String toString() {
         return String.format("""
@@ -62,8 +62,7 @@ public class Customer {
                 Address    : %s %s
                              %s
                              %s
-                Booking(s) : %s%n
                 """, customerId, firstName, lastName, email, phoneNumber, address.houseNumber(),
-                address.streetName(), address.postalCode(), address.cityName(), Arrays.toString(getBooking()));
+                address.streetName(), address.postalCode(), address.cityName());
     }
 }

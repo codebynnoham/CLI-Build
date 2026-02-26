@@ -3,6 +3,8 @@ package service;
 import contract.IBookingService;
 import contract.ICarService;
 import dao.CarDAO;
+import exception.CarNotFoundException;
+import exception.DuplicateCarException;
 import model.Car;
 import model.Category;
 import model.DateRange;
@@ -27,7 +29,7 @@ public class CarService implements ICarService {
     public void registerCar(Car car) {
         Objects.requireNonNull(car, "car cannot be null");
         if (carDAO.findByRegNumber(car.registrationNumber()).isPresent())
-            throw new IllegalArgumentException("car with reg number " + car.registrationNumber() + " already exists");
+            throw new DuplicateCarException("car with reg number " + car.registrationNumber() + " already exists");
         carDAO.addCar(car);
     }
 
@@ -39,7 +41,7 @@ public class CarService implements ICarService {
     @Override
     public void deleteCarByRegNumber(String regNumber) {
         if (!carDAO.removeCarByRegNumber(regNumber))
-            throw new IllegalArgumentException("car with reg number " + regNumber + " not found");
+            throw new CarNotFoundException("car with reg number " + regNumber + " not found");
     }
 
     @Override

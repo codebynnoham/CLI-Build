@@ -51,14 +51,14 @@ public class Booking {
     @Override
     public String toString() {
         return String.format("""
-                %s
-                Booking ID  : %d
-                Start Date  : %s
-                End Date    : %s
-                %s
-                %s
-                %s
-                %s""", message1(), bookingId, period.startDate(), period.endDate(), message2(), customer, message3(), car);
+            %s
+            Booking ID  : %d
+            Start Date  : %s
+            End Date    : %s
+            %s
+            %s
+            %s
+            %s""", message1(), bookingId, period.startDate(), period.endDate(), message2(), customer, message3(), car);
     }
 }
 

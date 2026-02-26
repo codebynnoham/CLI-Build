@@ -1,6 +1,9 @@
 package model;
 
+import exception.UnsupportedCategoryException;
+
 import java.math.BigDecimal;
+import java.util.Objects;
 
 public enum Category {
     ECONOMY {
@@ -175,4 +178,23 @@ public enum Category {
     public abstract BigDecimal getBaseCharge();
     public abstract BigDecimal getDailyRate();
     public abstract String getDescription();
+
+    public static Category fromString(String category) {
+        Objects.requireNonNull(category, "category cannot be null");
+        return switch (category.trim().toUpperCase()) {
+            case "ECONOMY", "E" -> ECONOMY;
+            case "COMPACT", "C" -> COMPACT;
+            case "STANDARD", "ST" -> STANDARD;
+            case "CROSSOVER", "CO" -> CROSSOVER;
+            case "SUV", "S" -> SUV;
+            case "LUXURY", "L" -> LUXURY;
+            case "CONVERTIBLE", "CT" -> CONVERTIBLE;
+            case "VAN", "V" -> VAN;
+            case "PICKUP", "P" -> PICKUP;
+            case "OFF ROAD", "O" -> OFF_ROAD;
+            default -> throw new UnsupportedCategoryException("The Category " + category + " is no supported. " +
+                    "The supported categories are: ECONOMY, COMPACT, STANDARD, CROSSOVER, SUV, LUXURY, CONVERTIBLE, " +
+                    "VAN, PICKUP, OFF ROAD (or E/C/ST/CO/S/L/CT/V/P/O).");
+        };
+    }
 }
