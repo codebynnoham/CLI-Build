@@ -1,10 +1,16 @@
 package model;
 
+import java.text.NumberFormat;
 import java.time.LocalDate;
+import java.util.Locale;
 
 import static java.util.Objects.requireNonNull;
 
-public record Car(String registrationNumber, String brand, String model, int yearOfManufacture, Category category,
+public record Car(String registrationNumber,
+                  String brand,
+                  String model,
+                  int yearOfManufacture,
+                  Category category,
                   EngineType engineType) {
     public Car(String registrationNumber, String brand, String model, int yearOfManufacture, Category category, EngineType engineType) {
         this.registrationNumber = requireNonNull(registrationNumber, "The registration number cannot be null");
@@ -15,6 +21,8 @@ public record Car(String registrationNumber, String brand, String model, int yea
         this.engineType = requireNonNull(engineType, "The engine type cannot be null");
     }
 
+    private static final NumberFormat CF = NumberFormat.getCurrencyInstance(Locale.UK);
+
     @Override
     public String toString() {
         return String.format("""
@@ -22,6 +30,8 @@ public record Car(String registrationNumber, String brand, String model, int yea
                         Brand       : %s
                         Year Model  : %d %s
                         Category    : %s
+                        Base Charge : %s
+                        Daily Rate  : %s
                         Description : %s
                         Engine type : %s
                         """,
@@ -30,6 +40,8 @@ public record Car(String registrationNumber, String brand, String model, int yea
                 yearOfManufacture,
                 model,
                 category,
+                CF.format(category.getBaseCharge()),
+                CF.format(category.getDailyRate()),
                 category.getDescription(),
                 engineType);
     }

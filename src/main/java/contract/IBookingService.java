@@ -23,9 +23,5 @@ public interface IBookingService {
     List<Booking> getBookingsByCar(String registrationNumber);
 
     BigDecimal calculateTotalPrice(int bookingId);
-
-    //String printBookingSummary(int bookingId);
-
-    //String toString(BigDecimal totalCost);
 }
 

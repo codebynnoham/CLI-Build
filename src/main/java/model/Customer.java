@@ -1,7 +1,6 @@
 package model;
 
 import java.security.SecureRandom;
-import java.util.Arrays;
 
 import static java.util.Objects.requireNonNull;
 
@@ -25,6 +24,7 @@ public class Customer {
         this.address = requireNonNull(address, "the address cannot be null");
         //this.booking = new Booking[10];
     }
+
     public int getCustomerId() {
         return customerId;
     }

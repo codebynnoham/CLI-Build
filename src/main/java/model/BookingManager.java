@@ -34,7 +34,7 @@ public class BookingManager {
     }
 
     private void showMenu() {
-        out.println(" ".repeat(30) + "\033[1m * * * * * *  Booking Services Manager Menu  * * * * * * \033[0m");
+        out.println(" ".repeat(30) + "\033[1m * * * * * *  Booking Services Manager  * * * * * * \033[0m");
         out.println(" ".repeat(20) + "1.  Register a Booking");
         out.println(" ".repeat(20) + "2.  Register a Car");
         out.println(" ".repeat(20) + "3.  Register a Customer");
@@ -204,7 +204,7 @@ public class BookingManager {
                     .orElseThrow(() -> new CustomerNotFoundException("Customer with id " + customerId + " not found"));
             List<Booking> bookings = bookingService.getBookingsByCustomer(customerId);
             //BigDecimal totalCost = bookingService.calculateTotalPrice(customerId);
-            out.println("**".repeat(20) + " Summary List of All Bookings by Customer with Id: " + customerId + "**".repeat(20));
+            out.println("**".repeat(15) + " Summary List of All Bookings by Customer with Id: " + customerId + " " + "**".repeat(15));
             if (bookings.isEmpty()) {
                 out.println(" ".repeat(15) + " No bookings found for customer with id " + customerId);
             } else {
@@ -235,7 +235,7 @@ public class BookingManager {
             carService.getAvailableCars(period).forEach(car -> out.println(car));
         } catch (DateTimeParseException e) {
             err.println("Invalid date format or date value. Please use yyyy-mm-dd.");
-        } catch (CarNotAvailableException e) {
+        } catch (CarNotAvailableException | StartDateSucceedsEndDateException | EndDatePrecedesStartDateException e) {
             err.println("Error: " + e.getMessage());
         }
         out.println();
@@ -259,7 +259,7 @@ public class BookingManager {
     public void getAllCarsByEngineType(Scanner scanner) {
         requireNonNull(scanner, "Scanner cannot be null");
         try {
-            out.print("Please Enter the Engine Type of Cars you want to view: ");
+            out.print("Please Enter the Engine Type for Cars you want to view: ");
             EngineType engineType = EngineType.fromString(scanner.nextLine().trim());
             out.println("*".repeat(20) + " Summary List of " + engineType +  " Engine Type Cars " + "*".repeat(20));
             carService.getCarsByEngineType(engineType).forEach(car -> out.println(car));
@@ -272,7 +272,7 @@ public class BookingManager {
 
     private static boolean exitApplication() throws InterruptedException {
         out.println();
-        out.println("Exiting the application...");
+        out.println("       Exiting the application . . . ");
         Thread.sleep(3000);
         return true;
     }
@@ -284,7 +284,7 @@ public class BookingManager {
     }
 
     private void pause(Scanner scanner) {
-        out.print("".repeat(10) + ">>".repeat(10) + "Press the enter key to continue...");
+        out.print("".repeat(10) + " >>".repeat(10) + " Press the enter key to continue . . . ");
         scanner.nextLine();
     }
 
