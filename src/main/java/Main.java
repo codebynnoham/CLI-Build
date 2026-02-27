@@ -14,28 +14,28 @@ import static java.lang.System.in;
 
 
 
-    void main() {
-        final Scanner scanner = new Scanner(in);
+void main() {
+    final Scanner scanner = new Scanner(in);
 
-        CarDAO carDAO = new CarDAO(50);
-        CustomerDAO customerDAO = new CustomerDAO(50);
-        BookingDAO bookingDAO = new BookingDAO(50);
-        DataInitializer dataInitializer = new DataInitializer(carDAO, customerDAO, bookingDAO);
-        dataInitializer.initializeData();
+    CarDAO carDAO = new CarDAO(50);
+    CustomerDAO customerDAO = new CustomerDAO(50);
+    BookingDAO bookingDAO = new BookingDAO(50);
+    DataInitializer dataInitializer = new DataInitializer(carDAO, customerDAO, bookingDAO);
+    dataInitializer.initializeData();
 
-        IBookingService bookingService = new BookingService(bookingDAO, carDAO, customerDAO);
-        ICarService carService = new CarService(carDAO, bookingService);
-        ICustomerService customerService = new CustomerService(customerDAO);
+    IBookingService bookingService = new BookingService(bookingDAO, carDAO, customerDAO);
+    ICarService carService = new CarService(carDAO, bookingService);
+    ICustomerService customerService = new CustomerService(customerDAO);
 
-        BookingManager bookingManager = new BookingManager(bookingService, carService, customerService);
-        try {
-            bookingManager.taskManagerMenu(scanner);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
-        scanner.close();
+    BookingManager bookingManager = new BookingManager(bookingService, carService, customerService);
+    try {
+        bookingManager.taskManagerMenu(scanner);
+    } catch (InterruptedException e) {
+        throw new RuntimeException(e);
     }
+
+    scanner.close();
+}
 
 
 
